@@ -16,202 +16,136 @@
     <link rel="stylesheet" href="assets/css/one.style.css">
     <link rel="stylesheet" href="assets/css/animation.css">
     <link rel="stylesheet" href="assets/dist/css/swiper.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.0/dist/aos.css">
 
     <style>
-        /* Font Lokal */
         @font-face { font-family: 'Amiri Regular'; src: url('assets/fonts/Amiri-Regular.ttf'); }
         @font-face { font-family: 'Embassy BT'; src: url('assets/fonts/Embassy-BT.ttf'); }
         
-        body { background-color:#333; font-size:14px; line-height: 1.4; font-family: 'Amiri Regular', serif; }
+        /* KUNCI SCROLL DI AWAL */
+        body { 
+            background-color:#333; 
+            font-size:14px; 
+            line-height: 1.4; 
+            font-family: 'Amiri Regular', serif; 
+            overflow: hidden; /* Dikunci sebelum buka */
+        }
 
-        /* Mengarahkan semua Background ke folder lokal */
         .bg_ucapan { background-image: url("assets/images/bg_ucapan.jpg") !important; background-attachment: fixed; background-size: cover; }
         .bg_penutup { background-image: url("assets/images/bg_penutup.jpg") !important; background-attachment: fixed; background-size: cover; }
         .bg_acara { background-color: #fbf7ec; background-image: url("assets/images/bg_resepsi.jpg") !important; background-attachment: fixed; }
         
-        /* Frame Foto */
         .frame_mempelai {
-            padding:4px; border:1px solid #ccbdab; box-shadow: 0 1px 6px #000; border-radius: 85px; width:160px;
+            padding:4px; border:1px solid #ccbdab; box-shadow: 0 1px 6px #000; border-radius: 85px; width:160px; height:160px; object-fit: cover;
         }
 
-        /* Menghilangkan Watermark secara paksa via CSS */
-        .simanten-watermark, .powered-by { display: none !important; visibility: hidden !important; }
+        /* POPUP STYLING */
+        #popup {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #333 url('assets/images/bg_utama.jpg') no-repeat center;
+            background-size: cover; z-index: 9999; display: flex; align-items: center; justify-content: center;
+        }
+
+        .simanten-watermark, .powered-by { display: none !important; }
     </style>
 </head>
-<body class="font0" style="overflow-x:hidden;line-height:1.2">
+<body class="font0">
 
-<div data-pop="slide-down" id="popup">
-    <div>
-        <div class="cover"> 
-            <div data-aos="zoom-out" data-aos-delay="500" style="margin: -180px 0px 10px 0px;margin-left: -95px;text-align:center">
-                <img src="assets/images/logo_inisial.png" class="logo" style="width: 190px;">
-                <br><br>
-            </div>
-            
-            <div data-aos="zoom-out" data-aos-delay="500" style="display:none;margin-left: -150px;text-align:center;width:300px">
-                <div class="font4" style="font-size: 5.5vw;color:#333">
-                    Elfahreza <small>&</small> Bunga
-                </div>
-            </div>
-
-            <div class="aos_obj_out" data-aos="fade-up" data-aos-delay="800" style="width:320px;margin-left:-160px;text-align:center">
-                <button type="button" class="button" id="btn_buka_undangan" style="width:200px;margin-top: 40px;text-align:center;color:#fff;font-size:13px;text-transform:uppercase;background-color:#996633;border-radius:30px;border:none;height:45px;cursor:pointer;">
-                    <b>Buka Undangan</b>
-                </button>
-            </div>
-        </div> 
-    </div>
-</div>
-
-<div id="overlay"></div>
-<button id="popupclose" class="buttonx aos_tri" style="border: 0px solid #000;position: fixed;top: 0px ;bottom: 0px;left: 0px;right: 0px;width: 100%;background: rgba(255,0,0,0);z-index: 1000"></button>
-
-<div style="" id='page_cover'>
-    <div style="overflow:hidden;">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="aos_obj_out" data-aos="zoom-out" style="position:fixed;top:0px;bottom:0px;left:0px;right:0px;z-index:1; background-image:url(assets/images/bg_utama.jpg); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
-                
-                <div class="aos_obj_out" data-aos="fade-left" style="text-align:right;position:fixed;top:-10px;left:0px;right:-10px;z-index:1">
-                    <img src="assets/images/pohon_kanan.png" style="width:80%;">
-                </div>
-                <div class="aos_obj_out" data-aos="fade-right" style="text-align:left;position:fixed;top:-10px;left:-10px;right:0px;z-index:1">
-                    <img src="assets/images/pohon_kiri.png" style="width:80%;">
-                </div>
-                <div class="aos_obj_out" data-aos="fade-up" style="position:fixed;bottom:20px;left:0px;right:0px;text-align:center;z-index:1">
-                    <img src="assets/images/rumah_adat.png" style="width:80%;">
-                </div>
-
-                <div style="padding:0px 0px;height:100vh;position:relative;z-index:2;">
-                    <div class="container-fluid text-center" style="position: fixed;top: 15%;left: 0px;right: 0px;">
-                        <div class="font0" data-aos="zoom-out-up" style="font-size: 6vw;color:#fff;">The Wedding of</div>            
-                        <div class="font4" data-aos="zoom-out-up" data-aos-delay="200" style="font-size: 12vw;color:#fff">Elfahreza & Bunga</div>
-                        <div class="font0" data-aos="zoom-out-up" data-aos-delay="400" style="font-size: 5.5vw;color:#fff">26 . 09 . 2027</div>
-                    </div>
-                    
-                    <div id="geser_atas" style="position: fixed;bottom: 20px;left: 0px;right: 0px;text-align:center;color:#fff;">
-                        <i class="fa fa-angle-double-up" style="font-size: 30px;"></i><br>
-                        <span>Swipe Up</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id='page12050'>
-    <div class="container-fluid page12050" style="overflow:hidden; background-color:#B8AB9A; padding:100px 20px;">
-        <div class="row">
-            <div class="col-sm-12 text-center">
-                <div class="font0" data-aos="zoom-out-down" style="color:#333; font-size:4vw;">
-                    <div style="font-family:Baskerville;">
-                        <br><i>
-                        "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan-pasangan dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berfikir."
-                        <br><br>
-                        <b>QS. Ar-Rum: 21</b></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id='page12051'>
-    <div class="container-fluid page12051" style="overflow:hidden; position:relative; min-height:100vh; background-image:url(assets/images/bg_mempelai.jpg); background-size:cover;">
-        
-        <div data-aos="fade-left" style="text-align:right; position:absolute; top:-10px; right:-10px;">
-            <img src="assets/images/pohon_kanan.png" style="width:80%;">
-        </div>
-        <div data-aos="fade-right" style="text-align:left; position:absolute; top:-10px; left:-10px;">
-            <img src="assets/images/pohon_kiri.png" style="width:80%;">
-        </div>
-
-        <div style="padding:100px 20px; position:relative; z-index:2;">
-            <div class="text-center">
-                <h2 class="font1" data-aos="fade-up" style="font-size:10vw; color:#fff;">Assalamu’alaikum Wr. Wb.</h2>
-                <p class="font0" data-aos="fade-up" style="color:#fff;">Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i ke acara pernikahan kami:</p>
-                
-                <div class="mt-5" data-aos="zoom-in">
-                    <img src="assets/images/foto_pria.jpg" class="frame_mempelai">
-                    <h1 class="font1" style="font-size:12vw; color:#fff; margin-top:20px;">Elfahreza</h1>
-                    <p class="font0" style="color:#fff;">Putra dari Bapak Nama & Ibu Nama</p>
-                </div>
-
-                <div class="font1" style="font-size:10vw; color:#fff; margin:20px 0;">&</div>
-
-                <div class="mb-5" data-aos="zoom-in">
-                    <img src="assets/images/foto_wanita.jpg" class="frame_mempelai">
-                    <h1 class="font1" style="font-size:12vw; color:#fff; margin-top:20px;">Bunga</h1>
-                    <p class="font0" style="color:#fff;">Putri dari Bapak Nama & Ibu Nama</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id='page12052'>
-    <div class="container-fluid" style="background-color:#fbf7ec; padding:80px 20px;">
-        <div class="row text-center">
-            <div class="col-md-6" data-aos="flip-left">
-                <div style="border:1px solid #ccbdab; padding:30px; border-radius:20px; background:#fff; margin-bottom:20px;">
-                    <h2 class="font1" style="font-size:8vw;">Akad Nikah</h2>
-                    <hr>
-                    <p class="font0">Minggu, 26 September 2027<br>08:00 WIB - Selesai</p>
-                    <p class="font0"><b>Lokasi:</b><br>Kediaman Mempelai Wanita</p>
-                </div>
-            </div>
-            <div class="col-md-6" data-aos="flip-right">
-                <div style="border:1px solid #ccbdab; padding:30px; border-radius:20px; background:#fff;">
-                    <h2 class="font1" style="font-size:8vw;">Resepsi</h2>
-                    <hr>
-                    <p class="font0">Minggu, 26 September 2027<br>11:00 WIB - Selesai</p>
-                    <p class="font0"><b>Lokasi:</b><br>Gedung Serbaguna Kota</p>
-                    <a href="#" class="btn btn-sm" style="background:#996633; color:#fff; border-radius:20px;">Buka Google Maps</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id='page12053'>
-    <div class="container-fluid" style="background-color:#fff; padding:80px 20px;">
-        <div class="row text-center">
-            <div class="col-sm-12" data-aos="fade-up">
-                <h2 class="font1" style="font-size:10vw;">Galeri Kebahagiaan</h2>
-                <br>
-            </div>
-            <div class="col-6 col-md-4" data-aos="zoom-in" style="padding:5px;"><img src="assets/images/galeri1.jpg" style="width:100%; border-radius:10px;"></div>
-            <div class="col-6 col-md-4" data-aos="zoom-in" style="padding:5px;"><img src="assets/images/galeri2.jpg" style="width:100%; border-radius:10px;"></div>
-            <div class="col-6 col-md-4" data-aos="zoom-in" style="padding:5px;"><img src="assets/images/galeri3.jpg" style="width:100%; border-radius:10px;"></div>
-            <div class="col-6 col-md-4" data-aos="zoom-in" style="padding:5px;"><img src="assets/images/galeri4.jpg" style="width:100%; border-radius:10px;"></div>
-            <div class="col-6 col-md-4" data-aos="zoom-in" style="padding:5px;"><img src="assets/images/galeri5.jpg" style="width:100%; border-radius:10px;"></div>
-            <div class="col-6 col-md-4" data-aos="zoom-in" style="padding:5px;"><img src="assets/images/galeri6.jpg" style="width:100%; border-radius:10px;"></div>
-        </div>
-    </div>
-</div>
-
-<div id='page12054'>
-    <div class="container-fluid" style="background-color:#fbf7ec; padding:80px 20px; text-align:center;">
-        <h2 class="font1" style="font-size:10vw;">Kado Digital</h2>
-        <p class="font0">Doa restu Anda merupakan karunia terindah, namun jika ingin memberikan tanda kasih, dapat melalui:</p>
-        <div class="mt-4" data-aos="fade-up">
-            <div style="background:#fff; padding:20px; border-radius:15px; border:1px solid #ccbdab; display:inline-block; min-width:280px;">
-                <img src="assets/images/logo_bca.png" style="width:100px;"><br>
-                <b class="font0">Bank Central Asia (BCA)</b><br>
-                <span class="font0">No. Rekening: 123456789</span><br>
-                <span class="font0">a/n Elfahreza</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id='page_penutup'>
-    <div class="container-fluid bg_penutup" style="padding:100px 20px; text-align:center; color:#fff;">
-        <div data-aos="zoom-in">
-            <h2 class="font1" style="font-size:12vw;">Terima Kasih</h2>
-            <p class="font0">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.</p>
+<div id="popup">
+    <div class="text-center" style="color:#fff; padding: 20px;">
+        <div data-aos="zoom-out">
+            <img src="assets/images/logo_inisial.png" style="width: 150px; margin-bottom: 20px;">
+            <h1 style="font-family:'Embassy BT'; font-size: 3rem;">Elfahreza & Bunga</h1>
+            <p>Kepada Yth. Bapak/Ibu/Saudara/i</p>
             <br>
-            <h3 class="font1">Elfahreza & Bunga</h3>
+            <button type="button" id="btn_buka_undangan" style="padding:12px 30px; background:#996633; color:#fff; border:none; border-radius:30px; cursor:pointer; font-weight:bold;">
+                BUKA UNDANGAN
+            </button>
         </div>
     </div>
+</div>
+
+<div id='page_cover' style="height: 100vh; position: relative;">
+    <div class="aos_obj_out" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1; background-image:url(assets/images/bg_utama.jpg); background-size:cover; background-position:center;"></div>
+    
+    <div data-aos="fade-left" style="position:fixed; top:0; right:0; z-index:2; width:50%;"><img src="assets/images/pohon_kanan.png" style="width:100%;"></div>
+    <div data-aos="fade-right" style="position:fixed; top:0; left:0; z-index:2; width:50%;"><img src="assets/images/pohon_kiri.png" style="width:100%;"></div>
+    <div data-aos="fade-up" style="position:fixed; bottom:0; left:0; width:100%; z-index:2; text-align:center;"><img src="assets/images/rumah_adat.png" style="width:100%; max-width:600px;"></div>
+
+    <div style="position:relative; z-index:3; height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; color:#fff;">
+        <div>
+            <div data-aos="zoom-out-up">The Wedding of</div>            
+            <div data-aos="zoom-out-up" data-aos-delay="200" style="font-family:'Embassy BT'; font-size: 15vw;">Elfahreza & Bunga</div>
+            <div data-aos="zoom-out-up" data-aos-delay="400">26 . 09 . 2027</div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="position:relative; z-index:4; background-color:#B8AB9A; padding:80px 20px; text-align:center;">
+    <div class="row justify-content-center">
+        <div class="col-md-8" data-aos="fade-up">
+            <p><i>"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan-pasangan dari jenismu sendiri..."</i></p>
+            <b>QS. Ar-Rum: 21</b>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="position:relative; z-index:4; background-image:url(assets/images/bg_mempelai.jpg); background-size:cover; padding:80px 20px; color:#fff;">
+    <div class="text-center">
+        <div class="row">
+            <div class="col-md-6 mb-5" data-aos="fade-right">
+                <img src="assets/images/foto_pria.jpg" class="frame_mempelai">
+                <h2 style="font-family:'Embassy BT'; font-size: 3rem;">Elfahreza</h2>
+                <p>Putra dari Bapak Nama & Ibu Nama</p>
+            </div>
+            <div class="col-md-6 mb-5" data-aos="fade-left">
+                <img src="assets/images/foto_wanita.jpg" class="frame_mempelai">
+                <h2 style="font-family:'Embassy BT'; font-size: 3rem;">Bunga</h2>
+                <p>Putri dari Bapak Nama & Ibu Nama</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg_acara" style="position:relative; z-index:4; padding:80px 20px;">
+    <div class="row text-center">
+        <div class="col-md-6 mb-4" data-aos="flip-left">
+            <div style="background:#fff; padding:30px; border-radius:20px; border:1px solid #ccbdab;">
+                <h3 style="font-family:'Embassy BT';">Akad Nikah</h3>
+                <p>Minggu, 26 Sept 2027<br>Kediaman Mempelai Wanita</p>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4" data-aos="flip-right">
+            <div style="background:#fff; padding:30px; border-radius:20px; border:1px solid #ccbdab;">
+                <h3 style="font-family:'Embassy BT';">Resepsi</h3>
+                <p>Minggu, 26 Sept 2027<br>Gedung Serbaguna</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="position:relative; z-index:4; background:#fff; padding:80px 20px; text-align:center;">
+    <h2 style="font-family:'Embassy BT'; font-size: 3rem;">Galeri Foto</h2>
+    <div class="row g-2 mt-4">
+        <div class="col-6 col-md-4" data-aos="zoom-in"><img src="assets/images/galeri1.jpg" style="width:100%; border-radius:10px;"></div>
+        <div class="col-6 col-md-4" data-aos="zoom-in"><img src="assets/images/galeri2.jpg" style="width:100%; border-radius:10px;"></div>
+        <div class="col-6 col-md-4" data-aos="zoom-in"><img src="assets/images/galeri3.jpg" style="width:100%; border-radius:10px;"></div>
+        <div class="col-6 col-md-4" data-aos="zoom-in"><img src="assets/images/galeri4.jpg" style="width:100%; border-radius:10px;"></div>
+        <div class="col-6 col-md-4" data-aos="zoom-in"><img src="assets/images/galeri5.jpg" style="width:100%; border-radius:10px;"></div>
+        <div class="col-6 col-md-4" data-aos="zoom-in"><img src="assets/images/galeri6.jpg" style="width:100%; border-radius:10px;"></div>
+    </div>
+</div>
+
+<div class="container-fluid" style="position:relative; z-index:4; background-color:#fbf7ec; padding:80px 20px; text-align:center;">
+    <h2 style="font-family:'Embassy BT';">Kado Digital</h2>
+    <div class="mt-3" style="background:#fff; padding:20px; border-radius:15px; border:1px solid #ccbdab; display:inline-block;">
+        <b>BCA - 123456789</b><br>a/n Elfahreza
+    </div>
+</div>
+
+<div class="container-fluid bg_penutup" style="position:relative; z-index:4; padding:100px 20px; text-align:center; color:#fff;">
+    <h1 style="font-family:'Embassy BT'; font-size: 4rem;">Terima Kasih</h1>
+    <p>Elfahreza & Bunga</p>
 </div>
 
 <footer style="background:#333; color:#fff; padding:20px; text-align:center;">
@@ -223,15 +157,21 @@
 <script src="https://unpkg.com/aos@2.3.0/dist/aos.js"></script>
 
 <script>
-    AOS.init({ duration: 1000, once: true });
-
-    // Fungsi Buka Undangan
     $(document).ready(function() {
+        AOS.init({ duration: 1000, once: true });
+
         $('#btn_buka_undangan').click(function() {
-            $('#popup').fadeOut();
-            $('#overlay').fadeOut();
-            $('body').css('overflow', 'auto');
-            document.getElementById('music_audio').play();
+            $('#popup').fadeOut(1000); // Popup hilang
+            $('body').css('overflow', 'auto'); // KUNCI DIBUKA!
+            $('body').css('overflow-x', 'hidden');
+            
+            var audio = document.getElementById('music_audio');
+            if(audio) audio.play();
+            
+            // Refresh AOS supaya animasi konten muncul pas di-scroll
+            setTimeout(function() {
+                AOS.refresh();
+            }, 100);
         });
     });
 </script>
